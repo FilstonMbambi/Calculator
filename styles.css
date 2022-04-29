@@ -1,0 +1,99 @@
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #e04e0f;
+}
+
+.container {
+    position: absolute;
+    display: flex;
+    flex-wrap: wrap;
+    top: 100px;
+    background: #e04e0f;
+    width: 20rem;
+    height: 30rem;
+    border-radius: 15px;
+}
+
+.display {
+    position: absolute;
+    top: 15px;
+    width: 19rem;
+    height: 95px;
+    margin: 7px;
+    border-radius: 10px;
+    background: rgb(201, 196, 196);
+    overflow: hidden;
+}
+
+.display #top {
+    display: block;
+    text-align: right;
+    font-size: 21px;
+    height: 47.5px;
+    margin-top: 10px;
+    padding-right: 7px;
+    font-family: sans-serif;
+}
+
+.display #bottom {
+    display: block;
+    text-align: right;
+    height: 47.5px;
+    font-size: 21px;
+    margin-top: 5px;
+    padding-right: 10px;
+    font-family: sans-serif;
+}
+
+.buttons {
+    position: absolute;
+    bottom: 5px;
+    margin: 4px;
+}
+
+#clear{
+    position: absolute;
+    left: 5px;
+    top: 143px;
+    width: 75px;
+    height: 25px;
+    background: #86b589;
+}
+
+#del {
+    position: absolute;
+    right: 7px;
+    top: 143px;
+    width: 150px;
+    height: 25px;
+    background: #b58686;
+}
+
+button {
+    width: 75px;
+    height: 75px;
+    border: 1px solid #211611;
+    border-radius: 10px;
+    font-size: 20px;
+}
+
+#btn-num:hover {
+    background: #ddc267;
+}
+
+#btn-ops:hover {
+    background: #ccd051;
+}
+
+#btn-ops {
+    background: #51d05a;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    font-size: 1.5rem;
+}
