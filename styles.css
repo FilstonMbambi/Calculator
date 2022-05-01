@@ -92,6 +92,14 @@ button {
     background: #51d05a;
 }
 
+#equals {
+    background: #51d05a;
+}
+#equals:hover {
+    background: #ccd051;
+}
+
+
 .footer {
     position: absolute;
     bottom: 0;
