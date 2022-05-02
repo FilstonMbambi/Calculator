@@ -66,12 +66,13 @@ function handleEquation(equation) {
             if (equation[i] === operators[j]) {
                 operator = operators[j];
                 operatorIndex = equation.indexOf(operator);
-                firstNum = equation[operatorIndex - 1];
-                secondNum = equation[operatorIndex + 1];
+                firstNum = equation.slice(0, operatorIndex).join("");
+                secondNum = equation.slice(operatorIndex + 1).join("");
                 result = calculate(firstNum, operator, secondNum);
-                equation.splice(operatorIndex - 1, 3, result);
             }
-       }
-   }
+        }
+    }
    return result;
 }
+
+console.log(handleEquation("5025+3005"));
