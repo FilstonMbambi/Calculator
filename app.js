@@ -8,13 +8,16 @@ const del = document.querySelector("#del");
 const numbers = document.querySelectorAll("#btn-num");
 const operations = document.querySelectorAll("#btn-ops");
 const equals = document.querySelector("#equals");
+const decimal = document.querySelector("#decimal");
 
-// Add event handlers on elements:
+// equation variables
+let firstNum, operator, secondNum;
 
 // Clear screen
 allClear.addEventListener("click", () => {
     topDisplay.textContent = "";
     bottomDisplay.textContent = 0;
+    equals.classList.remove("clicked");
 });
 
 // Delete
@@ -25,20 +28,48 @@ del.addEventListener("click", () => {
 // Print numbers on screen
 numbers.forEach((number) => {
     number.addEventListener("click", () => {
-        topDisplay.textContent += number.textContent;
+        if (equals.classList.contains("clicked")) {
+            topDisplay.textContent = "";
+            bottomDisplay.textContent = number.textContent;
+            equals.classList.remove("clicked");
+        }else if (bottomDisplay.textContent === "0") {
+            bottomDisplay.textContent = "";
+            bottomDisplay.textContent += number.textContent;
+        } else bottomDisplay.textContent += number.textContent;
     })
 })
+
+// Decimal
+decimal.addEventListener("click", appendDec)
+
+function appendDec() {
+    if (bottomDisplay.textContent === '')
+      bottomDisplay.textContent = '0'
+    if (bottomDisplay.textContent.includes('.')) return
+    bottomDisplay.textContent += '.'
+  }
 
 // Operations
 operations.forEach((operation) => {
     operation.addEventListener("click", () => {
-        topDisplay.textContent += `${operation.textContent}`;
+        if (equals.classList.contains("clicked")) {
+            topDisplay.textContent = "";
+            topDisplay.textContent += `${bottomDisplay.textContent}${operation.textContent}`;
+            bottomDisplay.textContent = "0"
+            equals.classList.remove("clicked");
+        }   else {
+            topDisplay.textContent += bottomDisplay.textContent;
+            bottomDisplay.textContent = "0";
+            topDisplay.textContent += `${operation.textContent}`;
+        }
     })
 })
 
 // Equals
 equals.addEventListener("click", () => {
-    bottomDisplay.textContent = handleEquation(topDisplay.textContent);
+    topDisplay.textContent += bottomDisplay.textContent;
+    bottomDisplay.textContent = solveEquation(topDisplay.textContent);
+    equals.classList.add("clicked");
 })
 
 // Perform calculations
@@ -52,7 +83,8 @@ function calculate(firstNum, operator, secondNum) {
     if (operator === '÷') return firstNum / secondNum;
 }
 
-function handleEquation(equation) {
+// Handle equation
+function solveEquation(equation) {
    const operators = ["÷", "x", "+", "-"];
    equation = equation.split("");
    let firstNum;
@@ -61,18 +93,16 @@ function handleEquation(equation) {
    let operatorIndex;
    let result;
 
-   for (let i = 0; i < equation.length; i++) {
-       for (let j = 0; j < operators.length; j++) {
-            if (equation[i] === operators[j]) {
-                operator = operators[j];
-                operatorIndex = equation.indexOf(operator);
-                firstNum = equation.slice(0, operatorIndex).join("");
-                secondNum = equation.slice(operatorIndex + 1).join("");
-                result = calculate(firstNum, operator, secondNum);
-            }
-        }
+   // Loop through operators array to calculate using BODMAS
+   for (var i = 0; i < operators.length; i++) {
+    while (equation.includes(operators[i])) {
+        operatorIndex = equation.findIndex(item => item === operators[i]);
+        firstNum = equation[operatorIndex-1];
+        operator = equation[operatorIndex];
+        secondNum = equation[operatorIndex+1];
+        result = calculate(firstNum, operator, secondNum);
+        equation.splice(operatorIndex - 1, 3, result); // after calculation of 1st numbers replace them with result
     }
+}
    return result;
 }
-
-console.log(handleEquation("5025+3005"));
