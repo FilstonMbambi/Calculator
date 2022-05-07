@@ -4,6 +4,7 @@ body {
     align-items: center;
     justify-content: center;
     background: #e04e0f;
+    user-select: none;
 }
 
 .container {
@@ -26,12 +27,13 @@ body {
     border-radius: 10px;
     background: rgb(201, 196, 196);
     overflow: hidden;
+    color: #062827;
 }
 
 .display #top {
     display: block;
     text-align: right;
-    font-size: 21px;
+    font-size: 20px;
     height: 47.5px;
     margin-top: 10px;
     padding-right: 7px;
@@ -42,7 +44,7 @@ body {
     display: block;
     text-align: right;
     height: 47.5px;
-    font-size: 21px;
+    font-size: 25px;
     margin-top: 5px;
     padding-right: 10px;
     font-family: sans-serif;
@@ -99,6 +101,16 @@ button {
     background: #ccd051;
 }
 
+#decimal {
+    background: #51d05a;
+}
+#decimal:hover {
+    background: #ccd051;
+}
+
+.clicked {
+    pointer-events: none;
+}
 
 .footer {
     position: absolute;
