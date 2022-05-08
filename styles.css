@@ -7,6 +7,11 @@ body {
     user-select: none;
 }
 
+h1 {
+    font-family: sans-serif;
+    color: rgb(201, 196, 196);
+}
+
 .container {
     position: absolute;
     display: flex;
