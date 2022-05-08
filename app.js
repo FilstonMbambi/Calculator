@@ -14,16 +14,28 @@ const decimal = document.querySelector("#decimal");
 let firstNum, operator, secondNum;
 
 // Clear screen
-allClear.addEventListener("click", () => {
+function clear() {
     topDisplay.textContent = "";
     bottomDisplay.textContent = 0;
     equals.classList.remove("clicked");
-});
+}
+
+allClear.addEventListener("click", clear);
 
 // Delete
-del.addEventListener("click", () => {
-    topDisplay.textContent =  topDisplay.textContent.substring(0, topDisplay.textContent.length - 1)
-});
+function deleteNum() {
+    if (bottomDisplay.textContent === "0") {
+        topDisplay.textContent =  topDisplay.textContent.substring(0, topDisplay.textContent.length - 1);
+    } else {
+        bottomDisplay.textContent = bottomDisplay.textContent.substring(0, bottomDisplay.textContent.length - 1);
+        if (bottomDisplay.textContent === "") {
+            bottomDisplay.textContent = "0";
+        } 
+    }
+    equals.classList.remove("clicked");
+}
+
+del.addEventListener("click", deleteNum);
 
 // Print numbers on screen
 numbers.forEach((number) => {
@@ -54,7 +66,7 @@ operations.forEach((operation) => {
     operation.addEventListener("click", () => {
         if (equals.classList.contains("clicked")) {
             topDisplay.textContent = "";
-            topDisplay.textContent += `${bottomDisplay.textContent}${operation.textContent}`;
+            topDisplay.textContent += `${bottomDisplay.textContent + operation.textContent}`;
             bottomDisplay.textContent = "0"
             equals.classList.remove("clicked");
         }   else {
@@ -66,11 +78,13 @@ operations.forEach((operation) => {
 })
 
 // Equals
-equals.addEventListener("click", () => {
+function evaluate() {
     topDisplay.textContent += bottomDisplay.textContent;
     bottomDisplay.textContent = solveEquation(topDisplay.textContent);
     equals.classList.add("clicked");
-})
+}
+
+equals.addEventListener("click", evaluate)
 
 // Perform calculations
 function calculate(firstNum, operator, secondNum) {
@@ -106,3 +120,41 @@ function solveEquation(equation) {
 }
    return result;
 }
+
+// Keyboard support
+document.addEventListener('keydown', function(e) {
+    if (e.key >= 0 && e.key <= 9) {
+        if (equals.classList.contains("clicked")) {
+            topDisplay.textContent = "";
+            bottomDisplay.textContent = e.key;
+            equals.classList.remove("clicked");
+        }else if (bottomDisplay.textContent === "0") {
+            bottomDisplay.textContent = "";
+            bottomDisplay.textContent += e.key;
+        } else bottomDisplay.textContent += e.key;
+    }
+    if (e.key === '.') appendDec()
+    if (e.key === '=' || e.key === 'Enter') evaluate()
+    if (e.key === 'Backspace') deleteNum()
+    if (e.key === 'Escape') clear()
+    if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') {
+        if (equals.classList.contains("clicked")) {
+            topDisplay.textContent = "";
+            topDisplay.textContent += `${bottomDisplay.textContent + convertOperator(e.key)}`;
+            bottomDisplay.textContent = "0"
+            equals.classList.remove("clicked");
+        }   else {
+            topDisplay.textContent += bottomDisplay.textContent;
+            bottomDisplay.textContent = "0";
+            topDisplay.textContent += `${convertOperator(e.key)}`;
+        }
+    }
+});
+
+// Convert keyboard operator
+function convertOperator(keyboardOperator) {
+    if (keyboardOperator === '/') return '÷'
+    if (keyboardOperator === '*') return 'x'
+    if (keyboardOperator === '-') return '-'
+    if (keyboardOperator === '+') return '+'
+  }
