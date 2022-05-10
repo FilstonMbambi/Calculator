@@ -38,17 +38,19 @@ function deleteNum() {
 del.addEventListener("click", deleteNum);
 
 // Print numbers on screen
+function printNum(num) {
+    if (equals.classList.contains("clicked")) {
+        topDisplay.textContent = "";
+        bottomDisplay.textContent = num;
+        equals.classList.remove("clicked");
+    }else if (bottomDisplay.textContent === "0") {
+        bottomDisplay.textContent = "";
+        bottomDisplay.textContent += num;
+    } else bottomDisplay.textContent += num;
+}
+
 numbers.forEach((number) => {
-    number.addEventListener("click", () => {
-        if (equals.classList.contains("clicked")) {
-            topDisplay.textContent = "";
-            bottomDisplay.textContent = number.textContent;
-            equals.classList.remove("clicked");
-        }else if (bottomDisplay.textContent === "0") {
-            bottomDisplay.textContent = "";
-            bottomDisplay.textContent += number.textContent;
-        } else bottomDisplay.textContent += number.textContent;
-    })
+    number.addEventListener("click", () => printNum(number.textContent))
 })
 
 // Decimal
@@ -62,19 +64,21 @@ function appendDec() {
   }
 
 // Operations
+function setOperator(operator) {
+    if (equals.classList.contains("clicked")) {
+        topDisplay.textContent = "";
+        topDisplay.textContent += `${bottomDisplay.textContent + " " + operator} `;
+        bottomDisplay.textContent = "0"
+        equals.classList.remove("clicked");
+    }   else {
+        topDisplay.textContent += bottomDisplay.textContent;
+        bottomDisplay.textContent = "0";
+        topDisplay.textContent += ` ${operator} `;
+    }
+}
+
 operations.forEach((operation) => {
-    operation.addEventListener("click", () => {
-        if (equals.classList.contains("clicked")) {
-            topDisplay.textContent = "";
-            topDisplay.textContent += `${bottomDisplay.textContent + operation.textContent}`;
-            bottomDisplay.textContent = "0"
-            equals.classList.remove("clicked");
-        }   else {
-            topDisplay.textContent += bottomDisplay.textContent;
-            bottomDisplay.textContent = "0";
-            topDisplay.textContent += `${operation.textContent}`;
-        }
-    })
+    operation.addEventListener("click", () => setOperator(operation.textContent))
 })
 
 // Equals
@@ -100,7 +104,7 @@ function calculate(firstNum, operator, secondNum) {
 // Handle equation
 function solveEquation(equation) {
    const operators = ["÷", "x", "+", "-"];
-   equation = equation.split("");
+   equation = equation.split(" ");
    let firstNum;
    let secondNum;
    let operator;
@@ -123,32 +127,12 @@ function solveEquation(equation) {
 
 // Keyboard support
 document.addEventListener('keydown', function(e) {
-    if (e.key >= 0 && e.key <= 9) {
-        if (equals.classList.contains("clicked")) {
-            topDisplay.textContent = "";
-            bottomDisplay.textContent = e.key;
-            equals.classList.remove("clicked");
-        }else if (bottomDisplay.textContent === "0") {
-            bottomDisplay.textContent = "";
-            bottomDisplay.textContent += e.key;
-        } else bottomDisplay.textContent += e.key;
-    }
+    if (e.key >= 0 && e.key <= 9) printNum(e.key)
     if (e.key === '.') appendDec()
     if (e.key === '=' || e.key === 'Enter') evaluate()
     if (e.key === 'Backspace') deleteNum()
     if (e.key === 'Escape') clear()
-    if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') {
-        if (equals.classList.contains("clicked")) {
-            topDisplay.textContent = "";
-            topDisplay.textContent += `${bottomDisplay.textContent + convertOperator(e.key)}`;
-            bottomDisplay.textContent = "0"
-            equals.classList.remove("clicked");
-        }   else {
-            topDisplay.textContent += bottomDisplay.textContent;
-            bottomDisplay.textContent = "0";
-            topDisplay.textContent += `${convertOperator(e.key)}`;
-        }
-    }
+    if (e.key === '+' || e.key === '-' || e.key === '*' || e.key === '/') setOperator(convertOperator(e.key));
 });
 
 // Convert keyboard operator
