@@ -10,9 +10,6 @@ const operations = document.querySelectorAll("#btn-ops");
 const equals = document.querySelector("#equals");
 const decimal = document.querySelector("#decimal");
 
-// equation variables
-let firstNum, operator, secondNum;
-
 // Clear screen
 function clear() {
     topDisplay.textContent = "";
