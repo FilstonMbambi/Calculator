@@ -18,21 +18,15 @@ function clear() {
     topDisplay.textContent = "";
     bottomDisplay.textContent = 0;
     equals.classList.remove("clicked");
+    del.classList.remove("clicked");
 }
 
 allClear.addEventListener("click", clear);
 
 // Delete
 function deleteNum() {
-    if (bottomDisplay.textContent === "0") {
-        topDisplay.textContent =  topDisplay.textContent.substring(0, topDisplay.textContent.length - 1);
-    } else {
-        bottomDisplay.textContent = bottomDisplay.textContent.substring(0, bottomDisplay.textContent.length - 1);
-        if (bottomDisplay.textContent === "") {
-            bottomDisplay.textContent = "0";
-        } 
-    }
-    equals.classList.remove("clicked");
+    bottomDisplay.textContent = bottomDisplay.textContent.substring(0, bottomDisplay.textContent.length - 1);
+    if (bottomDisplay.textContent === "") bottomDisplay.textContent = "0";
 }
 
 del.addEventListener("click", deleteNum);
@@ -43,6 +37,7 @@ function printNum(num) {
         topDisplay.textContent = "";
         bottomDisplay.textContent = num;
         equals.classList.remove("clicked");
+        del.classList.remove("clicked");
     }else if (bottomDisplay.textContent === "0") {
         bottomDisplay.textContent = "";
         bottomDisplay.textContent += num;
@@ -60,6 +55,7 @@ function appendDec() {
     if (bottomDisplay.textContent === '')
       bottomDisplay.textContent = '0'
     if (bottomDisplay.textContent.includes('.')) return
+    if (equals.classList.contains("clicked")) return
     bottomDisplay.textContent += '.'
   }
 
@@ -67,13 +63,14 @@ function appendDec() {
 function setOperator(operator) {
     if (equals.classList.contains("clicked")) {
         topDisplay.textContent = "";
-        topDisplay.textContent += `${bottomDisplay.textContent + " " + operator} `;
+        topDisplay.textContent += `${bottomDisplay.textContent} ${operator} `;
         bottomDisplay.textContent = "0"
         equals.classList.remove("clicked");
+        del.classList.remove("clicked");
     }   else {
-        topDisplay.textContent += bottomDisplay.textContent;
-        bottomDisplay.textContent = "0";
-        topDisplay.textContent += ` ${operator} `;
+            topDisplay.textContent += bottomDisplay.textContent;
+            bottomDisplay.textContent = "0";
+            topDisplay.textContent += ` ${operator} `;
     }
 }
 
@@ -83,9 +80,13 @@ operations.forEach((operation) => {
 
 // Equals
 function evaluate() {
-    topDisplay.textContent += bottomDisplay.textContent;
-    bottomDisplay.textContent = solveEquation(topDisplay.textContent);
-    equals.classList.add("clicked");
+    if (equals.classList.contains("clicked") || topDisplay.textContent === "") return
+    else {
+        topDisplay.textContent += bottomDisplay.textContent;
+        bottomDisplay.textContent = Math.round(solveEquation(topDisplay.textContent) * 1000) / 1000;
+        equals.classList.add("clicked");
+        del.classList.add("clicked");
+    }
 }
 
 equals.addEventListener("click", evaluate)
