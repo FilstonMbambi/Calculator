@@ -121,4 +121,10 @@ button {
     position: absolute;
     bottom: 0;
     font-size: 1.5rem;
+    color: rgb(19, 19, 19);
+}
+
+.footer a {
+    text-decoration: none;
+    color: rgb(40, 40, 40);
 }

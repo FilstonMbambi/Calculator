@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -14,25 +15,25 @@
             <output id="top"></output>
             <output id="bottom">0</output>
         </div>
-        <button id="clear">AC</button>
-        <button id="del">Delete</button>
+        <button id="clear" onclick="this.blur();">AC</button>
+        <button id="del" onclick="this.blur();">Delete</button>
         <div class="buttons">
-            <button id="btn-num">7</button>
-            <button id="btn-num">8</button>
-            <button id="btn-num">9</button>
-            <button id="btn-ops">÷</button>
-            <button id="btn-num">4</button>
-            <button id="btn-num">5</button>
-            <button id="btn-num">6</button>
-            <button id="btn-ops">x</button>
-            <button id="btn-num">1</button>
-            <button id="btn-num">2</button>
-            <button id="btn-num">3</button>
-            <button id="btn-ops">-</button>
-            <button id="decimal">.</button>
-            <button id="btn-num">0</button>
-            <button id="equals">=</button>
-            <button id="btn-ops">+</button>
+            <button id="btn-num" onclick="this.blur();">7</button>
+            <button id="btn-num" onclick="this.blur();">8</button>
+            <button id="btn-num" onclick="this.blur();">9</button>
+            <button id="btn-ops" onclick="this.blur();">÷</button>
+            <button id="btn-num" onclick="this.blur();">4</button>
+            <button id="btn-num" onclick="this.blur();">5</button>
+            <button id="btn-num" onclick="this.blur();">6</button>
+            <button id="btn-ops" onclick="this.blur();">x</button>
+            <button id="btn-num" onclick="this.blur();">1</button>
+            <button id="btn-num" onclick="this.blur();">2</button>
+            <button id="btn-num" onclick="this.blur();">3</button>
+            <button id="btn-ops" onclick="this.blur();">-</button>
+            <button id="decimal" onclick="this.blur();">.</button>
+            <button id="btn-num" onclick="this.blur();">0</button>
+            <button id="equals" onclick="this.blur();">=</button>
+            <button id="btn-ops" onclick="this.blur();">+</button>
         </div>
     </div>
     <footer class="footer">
@@ -42,6 +43,7 @@
               document.write(new Date().getFullYear())
             </script>
             FilstonMbambi
+            <a href="github.com/FilstonMbambi/" class='fa fa-github'></a>
           </p>
     </footer>
     <script src="app.js"></script>
